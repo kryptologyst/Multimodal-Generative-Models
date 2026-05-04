@@ -1,0 +1,59 @@
+# Model Configuration
+model:
+  text_to_image:
+    model_id: "runwayml/stable-diffusion-v1-5"
+    scheduler: "DPMSolverMultistepScheduler"
+    num_inference_steps: 20
+    guidance_scale: 7.5
+    height: 512
+    width: 512
+    num_images_per_prompt: 1
+  
+  image_to_text:
+    clip_model_id: "openai/clip-vit-base-patch32"
+    blip_model_id: "Salesforce/blip-image-captioning-base"
+    max_length: 50
+    num_beams: 4
+    temperature: 1.0
+  
+  clip:
+    model_id: "openai/clip-vit-base-patch32"
+    device: "auto"
+
+# Data Configuration
+data:
+  batch_size: 1
+  num_workers: 4
+  image_size: 512
+  max_text_length: 77
+
+# Training Configuration
+training:
+  learning_rate: 1e-4
+  num_epochs: 10
+  save_every: 5
+  eval_every: 1
+  gradient_accumulation_steps: 1
+  mixed_precision: true
+
+# Evaluation Configuration
+evaluation:
+  metrics: ["clip_score", "fid", "aesthetic_score"]
+  num_samples: 100
+
+# Paths
+paths:
+  data_dir: "data"
+  output_dir: "outputs"
+  checkpoint_dir: "checkpoints"
+  log_dir: "logs"
+
+# General Settings
+device: "auto"
+seed: 42
+
+# Safety Settings
+safety:
+  nsfw_filter: true
+  content_filter: true
+  watermark: true
